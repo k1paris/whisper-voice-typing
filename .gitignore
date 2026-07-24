@@ -19,7 +19,8 @@ whisper.cpp/.vscode/
 *.wav
 *.tmp
 
-# IDE / OS Files
+# IDE / OS / Personal Files
 .idea/
 .vscode/
 .DS_Store
+whister compile TODO
