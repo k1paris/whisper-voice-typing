@@ -37,7 +37,8 @@
 
 1. Склонируйте этот репозиторий. (Он включает `whisper.cpp` как подмодуль).
    ```bash
-   git clone --recursive https://github.com/ВАШ_ЛОГИН/whisper-voice-typing.git
+   git clone --recursive https://github.com/k1paris/whisper-voice-typing.git
+   cd whisper-voice-typing
    ```
 2. Установите зависимости:
    ```bash
@@ -49,9 +50,20 @@
    sudo usermod -aG input $USER
    ```
    *Перезагрузите ПК после этого, чтобы права применились.*
-4. Скомпилируйте `whisper.cpp` с поддержкой GPU и положите скомпилированный сервер в папку `whisper.cpp/build/bin/whisper-server` внутри этого проекта.
-5. Скачайте желаемую модель Whisper (например, `ggml-large-v3-turbo.bin` или `ggml-small.bin`) и положите её в папку `whisper.cpp/models/`.
-6. Отредактируйте пути в файле `app/config.py`, если необходимо.
+4. Скомпилируйте `whisper-server` с поддержкой вашей видеокарты (например, для NVIDIA CUDA):
+   ```bash
+   cd whisper.cpp
+   cmake -B build -DGGML_CUDA=1
+   cmake --build build --config Release -j
+   cd ..
+   ```
+5. Скачайте желаемую модель Whisper. Для сложных задач и смешанной речи рекомендуется `large-v3-turbo` (если у вас >6GB видеопамяти), для быстрых ответов — `small`:
+   ```bash
+   cd whisper.cpp/models
+   bash ./download-ggml-model.sh large-v3-turbo
+   cd ../..
+   ```
+6. Отредактируйте конфигурацию в файле `app/config.py`, если вы скачали другую модель (по умолчанию прописана `ggml-large-v3-turbo.bin`).
 
 **Запуск:**
 ```bash
