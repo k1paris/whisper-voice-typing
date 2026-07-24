@@ -1,0 +1,25 @@
+# Databases & Logs
+history.db
+*.log
+/app/__pycache__/
+__pycache__/
+*.pyc
+
+# Heavy AI Models
+*.bin
+whisper.cpp/models/*.bin
+
+# Build artifacts
+whisper.cpp/build/
+whisper.cpp/CMakeCache.txt
+whisper.cpp/CMakeFiles/
+whisper.cpp/.vscode/
+
+# Audio / Temp files
+*.wav
+*.tmp
+
+# IDE / OS Files
+.idea/
+.vscode/
+.DS_Store
