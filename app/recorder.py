@@ -121,7 +121,10 @@ class Recorder:
                 capture_output=True, text=True, timeout=120,
             )
             if result.returncode == 0:
-                text = " ".join(result.stdout.split())
+                text = result.stdout.replace("\r", "").replace("\n", "")
+                while "  " in text:
+                    text = text.replace("  ", " ")
+                text = text.strip()
                 return text if text else None
         except Exception:
             pass
