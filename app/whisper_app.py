@@ -18,6 +18,7 @@ import time
 import threading
 import urllib.request
 from datetime import datetime
+import fcntl
 
 # Ensure app package is importable
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -466,5 +467,16 @@ class WhisperApp:
 
 # ─── Entry point ────────────────────────────────────────────────────────
 if __name__ == "__main__":
+    # Prevent multiple instances using a lock file
+    lock_file_path = os.path.join(config.DATA_DIR, "whisper_app.lock")
+    try:
+        # Create DATA_DIR if it doesn't exist yet
+        os.makedirs(config.DATA_DIR, exist_ok=True)
+        lock_fd = open(lock_file_path, "w")
+        fcntl.flock(lock_fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        print("❌ Приложение уже запущено. Выход.")
+        sys.exit(0)
+
     app = WhisperApp()
     app.run()
